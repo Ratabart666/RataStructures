@@ -80,11 +80,11 @@ def size_tree(root):
     return size
 
 
-def key_set_tree(root, key_list, *, list_type="single_linked"):
+def key_set_tree(root, key_list, *, list_type='single_linked'):
     return tt.inorder_tree(root, key_list, list_type=list_type)
 
 
-def value_set_tree(root, value_list, *, list_type="single_linked"):
+def value_set_tree(root, value_list, *, list_type='single_linked'):
     return tt.inorder_tree(root, value_list, values=True, list_type=list_type)
 
 
@@ -192,9 +192,9 @@ def height_tree(root):
         return 1 + max(left_height, right_height)
 
 
-def keys_range(root, key_initial, key_final, key_list, *, list_type="single_linked"):
+def keys_range(root, key_initial, key_final, key_list, *, list_type='single_linked'):
     return tt.inorder_tree(root, key_list, key_initial=key_initial, key_final=key_final, list_type=list_type)
 
 
-def values_range(root, key_initial, key_final, value_list, *, list_type="single_linked"):
+def values_range(root, key_initial, key_final, value_list, *, list_type='single_linked'):
     return tt.inorder_tree(root, value_list, values=True, key_initial=key_initial, key_final=key_final, list_type=list_type)

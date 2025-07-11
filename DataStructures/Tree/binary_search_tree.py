@@ -34,13 +34,13 @@ def is_empty(my_bst):
     return bst_node.size_tree(my_bst['root']) == 0
 
 
-def key_set(my_bst, *, list_type="single_linked"):
-    key_list = al.new_list() if list_type == "array" else lt.new_list()
+def key_set(my_bst, *, list_type='single_linked'):
+    key_list = al.new_list() if list_type == 'array' else lt.new_list()
     return bst_node.key_set_tree(my_bst['root'], key_list, list_type=list_type)
 
 
-def value_set(my_bst, *, list_type="single_linked"):
-    value_list = al.new_list() if list_type == "array" else lt.new_list()
+def value_set(my_bst, *, list_type='single_linked'):
+    value_list = al.new_list() if list_type == 'array' else lt.new_list()
     return bst_node.value_set_tree(my_bst['root'], value_list, list_type=list_type)
 
 
@@ -82,11 +82,11 @@ def height(my_bst):
     return bst_node.height_tree(my_bst['root'])
 
 
-def keys(my_bst, key_initial, key_final, *, list_type="single_linked"):
-    key_list = al.new_list() if list_type == "array" else lt.new_list()
+def keys(my_bst, key_initial, key_final, *, list_type='single_linked'):
+    key_list = al.new_list() if list_type == 'array' else lt.new_list()
     return bst_node.keys_range(my_bst['root'], key_initial, key_final, key_list, list_type=list_type)
 
 
-def values(my_bst, key_initial, key_final, *, list_type="single_linked"):
-    value_list = al.new_list() if list_type == "array" else lt.new_list()
+def values(my_bst, key_initial, key_final, *, list_type='single_linked'):
+    value_list = al.new_list() if list_type == 'array' else lt.new_list()
     return bst_node.values_range(my_bst['root'], key_initial, key_final, value_list, list_type=list_type)
