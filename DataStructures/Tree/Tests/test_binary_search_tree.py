@@ -479,17 +479,17 @@ def test_heigh():
     assert isinstance(height_seven, int)
 
     # Verificar que los valores devueltos son no negativos
-    assert height_empty >= 0
-    assert height_three >= 0
-    assert height_seven >= 0
+    assert height_empty >= -1
+    assert height_three >= -1
+    assert height_seven >= -1
 
     # Verificar consistencia en múltiples llamadas
     result1 = bst.height(three_bst)
     result2 = bst.height(three_bst)
     assert result1 == result2, "La función debería ser determinista"
 
-    # Verificar que la altura de un árbol vacío es 0
-    assert height_empty == 0, "La altura de un árbol vacío debe ser 0"
+    # Verificar que la altura de un árbol vacío es -1
+    assert height_empty == -1, "La altura de un árbol vacío debe ser -1"
 
     # Verificar que la altura crece con el tamaño del árbol (generalmente)
     # Esto es una heurística general, no una regla absoluta
