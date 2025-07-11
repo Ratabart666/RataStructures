@@ -1,4 +1,5 @@
 from DataStructures.List import single_linked_list as lt
+from DataStructures.Tree import tree_trasversal as tt
 
 
 def new_node(key, value):
@@ -81,19 +82,11 @@ def size_tree(root):
 
 
 def key_set_tree(root, key_list):
-    if root:
-        key_list = key_set_tree(root['left'], key_list)
-        key_list = lt.add_last(key_list, get_key(root))
-        key_list = key_set_tree(root['right'], key_list)
-    return key_list
+    return tt.inorder_tree(root, key_list)
 
 
 def value_set_tree(root, value_list):
-    if root:
-        value_list = value_set_tree(root['left'], value_list)
-        value_list = lt.add_last(value_list, get_value(root))
-        value_list = value_set_tree(root['right'], value_list)
-    return value_list
+    return tt.inorder_tree(root, value_list, values=True)
 
 
 def get_min_node(root):
@@ -207,52 +200,8 @@ def height_tree(root):
 
 
 def keys_range(root, key_initial, key_final, key_list):
-    if root:
-        current_key = get_key(root)
-        if key_initial < current_key:
-            key_list = keys_range(
-                root['left'], key_initial, key_final, key_list)
-        if key_initial <= current_key <= key_final:
-            key_list = lt.add_last(key_list, current_key)
-        if current_key < key_final:
-            key_list = keys_range(
-                root['right'], key_initial, key_final, key_list)
-    return key_list
+    return tt.inorder_tree(root, key_list, key_initial=key_initial, key_final=key_final)
 
 
 def values_range(root, key_initial, key_final, value_list):
-    if root:
-        current_key = get_key(root)
-        if key_initial < current_key:
-            value_list = values_range(
-                root['left'], key_initial, key_final, value_list)
-        if key_initial <= current_key <= key_final:
-            value_list = lt.add_last(value_list, get_value(root))
-        if current_key < key_final:
-            value_list = values_range(
-                root['right'], key_initial, key_final, value_list)
-    return value_list
-
-
-def inorder_tree(root, node_list):
-    if root:
-        node_list = inorder_tree(root['left'], node_list)
-        node_list = lt.add_last(node_list, root)
-        node_list = inorder_tree(root['right'], node_list)
-    return node_list
-
-
-def preorder_tree(root, node_list):
-    if root:
-        node_list = lt.add_last(node_list, root)
-        node_list = preorder_tree(root['left'], node_list)
-        node_list = preorder_tree(root['right'], node_list)
-    return node_list
-
-
-def postorder_tree(root, node_list):
-    if root:
-        node_list = postorder_tree(root['left'], node_list)
-        node_list = postorder_tree(root['right'], node_list)
-        node_list = lt.add_last(node_list, root)
-    return node_list
+    return tt.inorder_tree(root, value_list, values=True, key_initial=key_initial, key_final=key_final)
