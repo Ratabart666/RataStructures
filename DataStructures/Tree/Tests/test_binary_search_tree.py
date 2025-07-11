@@ -12,13 +12,13 @@ def default_compare_test(a, b):
 
 
 def setup_tests():
-    empty_tree = bst.new_map()
+    empty_tree = bst.new_bst()
 
     return empty_tree
 
 
 def setup_three_nodes():
-    three_nodes = bst.new_map()
+    three_nodes = bst.new_bst()
     node_1 = bst_node.new_node(1, 1)
     node_3 = bst_node.new_node(10, 10)
     node_2 = bst_node.new_node(5, 5)
@@ -33,7 +33,7 @@ def setup_three_nodes():
 
 
 def setup_seven_nodes():
-    seven_nodes = bst.new_map()
+    seven_nodes = bst.new_bst()
     node_1 = bst_node.new_node(10, 10)
     node_2 = bst_node.new_node(20, 20)
     node_3 = bst_node.new_node(30, 30)
@@ -61,7 +61,7 @@ def setup_seven_nodes():
 
 @handle_not_implemented
 def test_new_binary_search_tree():
-    empty_bst = bst.new_map()
+    empty_bst = bst.new_bst()
 
     assert empty_bst["root"] is None
 
