@@ -1,4 +1,3 @@
-from DataStructures.List import single_linked_list as lt
 from DataStructures.Tree import tree_trasversal as tt
 
 
@@ -132,32 +131,26 @@ def delete_max_tree(root):
 def floor_key(root, key):
     if not root:
         floor = None
-    elif root:
-        if key == get_key(root):
-            floor = get_key(root)
-        elif key < get_key(root):
-            floor = floor_key(root['left'], key)
-        elif key > get_key(root):
-            if not root['right'] or get_key(root['right']) > key:
-                floor = get_key(root)
-            if root['right'] and get_key(root['right']) < key:
-                floor = floor_key(root['right'], key)
+    elif key == get_key(root):
+        floor = get_key(root)
+    elif key < get_key(root):
+        floor = floor_key(root['left'], key)
+    elif key > get_key(root):
+        right_floor = floor_key(root['right'], key)
+        floor = right_floor if right_floor else get_key(root)
     return floor
 
 
 def ceiling_key(root, key):
     if not root:
         ceiling = None
-    elif root:
-        if key == get_key(root):
-            ceiling = get_key(root)
-        elif key > get_key(root):
-            ceiling = ceiling_key(root['right'], key)
-        elif key < get_key(root):
-            if not root['left'] or get_key(root['left']) < key:
-                ceiling = get_key(root)
-            elif root['left'] and get_key(root['left']) > key:
-                ceiling = ceiling_key(root['left'], key)
+    elif key == get_key(root):
+        ceiling = get_key(root)
+    elif key > get_key(root):
+        ceiling = ceiling_key(root['right'], key)
+    elif key < get_key(root):
+        left_ceiling = ceiling_key(root['left'], key)
+        ceiling = left_ceiling if left_ceiling else get_key(root)
     return ceiling
 
 
