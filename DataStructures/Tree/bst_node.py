@@ -66,11 +66,11 @@ def remove_node(root, key):
             elif not root['right']:
                 root = root['left']
             elif root['left'] and root['right']:
-                succesor_key = get_min_node(root['right'])
-                succesor_value = get_node(root['right'], succesor_key)
+                successor_key = get_min_node(root['right'])
+                successor_value = get_node(root['right'], successor_key)
                 root['right'] = delete_min_tree(root['right'])
-                root['key'] = succesor_key
-                root['value'] = succesor_value
+                root['key'] = successor_key
+                root['value'] = successor_value
                 root['size'] -= 1
     return root
 
@@ -154,15 +154,15 @@ def ceiling_key(root, key):
     return ceiling
 
 
-def rank_keys(root, key):
+def rank_key(root, key):
     if not root:
         rank = 0
     elif root:
         if key < get_key(root):
-            rank = rank_keys(root['left'], key)
+            rank = rank_key(root['left'], key)
         elif key > get_key(root):
             rank_left = size_tree(root['left'])
-            rank_right = rank_keys(root['right'], key)
+            rank_right = rank_key(root['right'], key)
             rank = rank_left + 1 + rank_right
         elif key == get_key(root):
             rank = size_tree(root['left'])

@@ -74,7 +74,7 @@ def select(my_bst, pos):
 
 
 def rank(my_bst, key):
-    return bst_node.rank_keys(my_bst['root'], key)
+    return bst_node.rank_key(my_bst['root'], key)
 
 
 def height(my_bst):
