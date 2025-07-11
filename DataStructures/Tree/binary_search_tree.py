@@ -2,91 +2,94 @@ from DataStructures.List import single_linked_list as lt
 from DataStructures.List import array_list as al
 from DataStructures.Tree import bst_node
 
+ARRAY = 'array'
+SINGLE_LINKED = 'single_linked'
+
 
 def new_map():
-    o_map = {'root': None}
-    return o_map
+    bst = {'root': None}
+    return bst
 
 
-def put(my_bst, key, value):
-    my_bst['root'] = bst_node.insert_node(my_bst['root'], key, value)
-    return my_bst
+def put(bst, key, value):
+    bst['root'] = bst_node.insert_node(bst['root'], key, value)
+    return bst
 
 
-def get(my_bst, key):
-    return bst_node.get_node(my_bst['root'], key)
+def get(bst, key):
+    return bst_node.get_node(bst['root'], key)
 
 
-def remove(my_bst, key):
-    my_bst['root'] = bst_node.remove_node(my_bst['root'], key)
-    return my_bst
+def remove(bst, key):
+    bst['root'] = bst_node.remove_node(bst['root'], key)
+    return bst
 
 
-def contains(my_bst, key):
-    return bool(get(my_bst, key))
+def contains(bst, key):
+    return bool(get(bst, key))
 
 
-def size(my_bst):
-    return bst_node.size_tree(my_bst['root'])
+def size(bst):
+    return bst_node.size_tree(bst['root'])
 
 
-def is_empty(my_bst):
-    return bst_node.size_tree(my_bst['root']) == 0
+def is_empty(bst):
+    return bst_node.size_tree(bst['root']) == 0
 
 
-def key_set(my_bst, *, list_type='single_linked'):
-    key_list = al.new_list() if list_type == 'array' else lt.new_list()
-    return bst_node.key_set_tree(my_bst['root'], key_list, list_type=list_type)
+def key_set(bst, *, list_type=SINGLE_LINKED):
+    key_list = al.new_list() if list_type == ARRAY else lt.new_list()
+    return bst_node.key_set_tree(bst['root'], key_list, list_type=list_type)
 
 
-def value_set(my_bst, *, list_type='single_linked'):
-    value_list = al.new_list() if list_type == 'array' else lt.new_list()
-    return bst_node.value_set_tree(my_bst['root'], value_list, list_type=list_type)
+def value_set(bst, *, list_type=SINGLE_LINKED):
+    value_list = al.new_list() if list_type == ARRAY else lt.new_list()
+    return bst_node.value_set_tree(bst['root'], value_list, list_type=list_type)
 
 
-def get_min(my_bst):
-    return bst_node.get_min_node(my_bst['root'])
+def get_min(bst):
+    return bst_node.get_min_node(bst['root'])
 
 
-def get_max(my_bst):
-    return bst_node.get_max_node(my_bst['root'])
+def get_max(bst):
+    return bst_node.get_max_node(bst['root'])
 
 
-def delete_min(my_bst):
-    my_bst['root'] = bst_node.delete_min_tree(my_bst['root'])
-    return my_bst
+def delete_min(bst):
+    bst['root'] = bst_node.delete_min_tree(bst['root'])
+    return bst
 
 
-def delete_max(my_bst):
-    my_bst['root'] = bst_node.delete_max_tree(my_bst['root'])
-    return my_bst
+def delete_max(bst):
+    bst['root'] = bst_node.delete_max_tree(bst['root'])
+    return bst
 
 
-def floor(my_bst, key):
-    return bst_node.floor_key(my_bst['root'], key)
+def floor(bst, key):
+    return bst_node.floor_key(bst['root'], key)
 
 
-def ceiling(my_bst, key):
-    return bst_node.ceiling_key(my_bst['root'], key)
+def ceiling(bst, key):
+    return bst_node.ceiling_key(bst['root'], key)
 
 
-def select(my_bst, pos):
-    return bst_node.select_key(my_bst['root'], pos)
+def select(bst, pos):
+    return bst_node.select_key(bst['root'], pos)
 
 
-def rank(my_bst, key):
-    return bst_node.rank_key(my_bst['root'], key)
+def rank(bst, key):
+    return bst_node.rank_key(bst['root'], key)
 
 
-def height(my_bst):
-    return bst_node.height_tree(my_bst['root'])
+def height(bst):
+    return bst_node.height_tree(bst['root'])
 
 
-def keys(my_bst, key_initial, key_final, *, list_type='single_linked'):
-    key_list = al.new_list() if list_type == 'array' else lt.new_list()
-    return bst_node.keys_range(my_bst['root'], key_initial, key_final, key_list, list_type=list_type)
+def keys(bst, key_initial, key_final, *, list_type=SINGLE_LINKED):
+    key_list = al.new_list() if list_type == ARRAY else lt.new_list()
+    return bst_node.keys_range(bst['root'], key_initial, key_final, key_list, list_type=list_type)
 
 
-def values(my_bst, key_initial, key_final, *, list_type='single_linked'):
-    value_list = al.new_list() if list_type == 'array' else lt.new_list()
-    return bst_node.values_range(my_bst['root'], key_initial, key_final, value_list, list_type=list_type)
+def values(bst, key_initial, key_final, *, list_type=SINGLE_LINKED):
+    value_list = al.new_list() if list_type == ARRAY else lt.new_list()
+    return bst_node.values_range(bst['root'], key_initial, key_final, value_list, list_type=list_type)
