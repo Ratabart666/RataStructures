@@ -1,4 +1,4 @@
-from DataStructures.Tree import tree_trasversal as tt
+from DataStructures.Tree import tree_traversal as tt
 
 ARRAY = 'array'
 SINGLE_LINKED = 'single_linked'
