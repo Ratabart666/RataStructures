@@ -22,7 +22,7 @@ def remove(my_bst, key):
 
 
 def contains(my_bst, key):
-    return get(my_bst, key) is not None
+    return bool(get(my_bst, key))
 
 
 def size(my_bst):
@@ -89,11 +89,3 @@ def keys(my_bst, key_initial, key_final):
 def values(my_bst, key_initial, key_final):
     value_list = lt.new_list()
     return bst_node.values_range(my_bst['root'], key_initial, key_final, value_list)
-
-
-def default_compare(key, element):
-    if key == bst_node.get_key(element):
-        return 0
-    elif key > bst_node.get_key(element):
-        return 1
-    return -1
