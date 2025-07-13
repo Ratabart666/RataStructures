@@ -6,111 +6,111 @@ BLACK = 'black'
 RED = 'red'
 
 
-def new_rbt_node(key, value):
-    rbt_node = {'key': key, 'value': value, 'size': 1,
-                'left': None, 'right': None, 'color': RED}
-    return rbt_node
+def new_node(key, value):
+    node = {'key': key, 'value': value, 'size': 1,
+            'left': None, 'right': None, 'color': RED}
+    return node
 
 
-def get_value(rbt_node):
-    value = rbt_node['value'] if rbt_node else None
+def get_value(node):
+    value = node['value'] if node else None
     return value
 
 
-def get_key(rbt_node):
-    key = rbt_node['key'] if rbt_node else None
+def get_key(node):
+    key = node['key'] if node else None
     return key
 
 
-def get_left(rbt_node):
-    return rbt_node['left'] if rbt_node else None
+def get_left(node):
+    return node['left'] if node else None
 
 
-def get_right(rbt_node):
-    return rbt_node['right'] if rbt_node else None
+def get_right(node):
+    return node['right'] if node else None
 
 
-def update_left(rbt_node, new_left):
-    if rbt_node:
-        rbt_node['left'] = new_left
-        rbt_node = update_size(rbt_node)
-    return rbt_node
+def update_left(node, new_left):
+    if node:
+        node['left'] = new_left
+        node = update_size(node)
+    return node
 
 
-def update_right(rbt_node, new_right):
-    if rbt_node:
-        rbt_node['right'] = new_right
-        rbt_node = update_size(rbt_node)
-    return rbt_node
+def update_right(node, new_right):
+    if node:
+        node['right'] = new_right
+        node = update_size(node)
+    return node
 
 
-def update_key(rbt_node, new_key):
-    if rbt_node:
-        rbt_node['key'] = new_key
-    return rbt_node
+def update_key(node, new_key):
+    if node:
+        node['key'] = new_key
+    return node
 
 
-def update_value(rbt_node, new_value):
-    if rbt_node:
-        rbt_node['value'] = new_value
-    return rbt_node
+def update_value(node, new_value):
+    if node:
+        node['value'] = new_value
+    return node
 
 
-def update_color(rbt_node, new_color):
-    if rbt_node:
-        rbt_node['color'] = new_color
-    return rbt_node
+def update_color(node, new_color):
+    if node:
+        node['color'] = new_color
+    return node
 
 
-def get_color(rbt_node):
-    return rbt_node['color'] if rbt_node else BLACK
+def get_color(node):
+    return node['color'] if node else BLACK
 
 
 def size_tree(root):
     return root['size'] if root else 0
 
 
-def update_size(rbt_node):
-    if rbt_node:
-        rbt_node['size'] = 1 + size_tree(get_left(rbt_node)) + \
-            size_tree(get_right(rbt_node))
-    return rbt_node
+def update_size(node):
+    if node:
+        node['size'] = 1 + size_tree(get_left(node)) + \
+            size_tree(get_right(node))
+    return node
 
 
-def insert_rbt_node(root, key, value, compare):
+def insert_node(root, key, value, compare):
     if not root:
-        root = new_rbt_node(key, value)
+        root = new_node(key, value)
     elif compare(key, get_key(root)) == 0:
         root = update_value(root, value)
     elif compare(key, get_key(root)) < 0:
-        new_left = insert_rbt_node(get_left(root), key, value, compare)
+        new_left = insert_node(get_left(root), key, value, compare)
         root = update_left(root, new_left)
         root = balance(root)
     elif compare(key, get_key(root)) > 0:
-        new_right = insert_rbt_node(get_right(root), key, value, compare)
+        new_right = insert_node(get_right(root), key, value, compare)
         root = update_right(root, new_right)
         root = balance(root)
     return root
 
 
-def get_rbt_node(root, key, compare):
+def get_node(root, key, compare):
     if not root:
         value = None
     elif compare(key, get_key(root)) == 0:
         value = get_value(root)
     elif compare(key, get_key(root)) < 0:
-        value = get_rbt_node(get_left(root), key, compare)
+        value = get_node(get_left(root), key, compare)
     elif compare(key, get_key(root)) > 0:
-        value = get_rbt_node(get_right(root), key, compare)
+        value = get_node(get_right(root), key, compare)
     return value
 
 
-def remove_rbt_node(root, key, compare):
+def remove_node(root, key, compare):
     if root:
         if compare(key, get_key(root)) < 0:
             if not is_red(get_left(root)) and not is_red(get_left(get_left(root))):
                 root = move_red_left(root)
-            new_left = remove_rbt_node(get_left(root), key, compare)
+            new_left = remove_node(get_left(root), key, compare)
             root = update_left(root, new_left)
             root = balance(root)
         elif compare(key, get_key(root)) > 0:
@@ -118,7 +118,7 @@ def remove_rbt_node(root, key, compare):
                 root = rotate_right(root)
             elif not is_red(get_right(root)) and not is_red(get_left(get_right(root))):
                 root = move_red_right(root)
-            new_right = remove_rbt_node(get_right(root), key, compare)
+            new_right = remove_node(get_right(root), key, compare)
             root = update_right(root, new_right)
             root = balance(root)
         elif compare(key, get_key(root)) == 0:
@@ -129,8 +129,8 @@ def remove_rbt_node(root, key, compare):
             elif not get_right(root):
                 root = get_left(root)
             elif get_left(root) and get_right(root):
-                successor_key = get_min_rbt_node(get_right(root))
-                successor_value = get_rbt_node(
+                successor_key = get_min_node(get_right(root))
+                successor_value = get_node(
                     get_right(root), successor_key, compare)
                 new_right = delete_min_tree(get_right(root))
                 root = update_right(root, new_right)
@@ -147,23 +147,23 @@ def value_set_tree(root, value_list, compare, *, list_type=SINGLE_LINKED):
     return tt.inorder_tree(root, value_list, compare, values=True, list_type=list_type)
 
 
-def get_min_rbt_node(root):
+def get_min_node(root):
     if not root:
         key = None
     elif not get_left(root):
         key = get_key(root)
     elif get_left(root):
-        key = get_min_rbt_node(get_left(root))
+        key = get_min_node(get_left(root))
     return key
 
 
-def get_max_rbt_node(root):
+def get_max_node(root):
     if not root:
         key = None
     elif not get_right(root):
         key = get_key(root)
     elif get_right(root):
-        key = get_max_rbt_node(get_right(root))
+        key = get_max_node(get_right(root))
     return key
 
 
@@ -260,67 +260,67 @@ def values_range(root, key_initial, key_final, value_list, compare, *, list_type
     return tt.inorder_tree(root, value_list, compare, values=True, key_initial=key_initial, key_final=key_final, list_type=list_type)
 
 
-def rotate_left(rbt_node):
-    right = get_right(rbt_node)
-    rbt_node = update_right(rbt_node, get_left(right))
-    right = update_left(right, rbt_node)
-    right = update_color(right, get_color(rbt_node))
-    rbt_node = update_color(rbt_node, RED)
+def rotate_left(node):
+    right = get_right(node)
+    node = update_right(node, get_left(right))
+    right = update_left(right, node)
+    right = update_color(right, get_color(node))
+    node = update_color(node, RED)
     return right
 
 
-def rotate_right(rbt_node):
-    left = get_left(rbt_node)
-    rbt_node = update_left(rbt_node, get_right(left))
-    left = update_right(left, rbt_node)
-    left = update_color(left, get_color(rbt_node))
-    rbt_node = update_color(rbt_node, RED)
+def rotate_right(node):
+    left = get_left(node)
+    node = update_left(node, get_right(left))
+    left = update_right(left, node)
+    left = update_color(left, get_color(node))
+    node = update_color(node, RED)
     return left
 
 
-def flip_rbt_node_color(rbt_node):
-    if rbt_node:
-        new_color = RED if get_color(rbt_node) == BLACK else BLACK
-        rbt_node = update_color(rbt_node, new_color)
-    return rbt_node
+def flip_node_color(node):
+    if node:
+        new_color = RED if get_color(node) == BLACK else BLACK
+        node = update_color(node, new_color)
+    return node
 
 
-def flip_colors(rbt_node):
-    rbt_node = flip_rbt_node_color(rbt_node)
-    rbt_node = update_left(rbt_node, flip_rbt_node_color(get_left(rbt_node)))
-    rbt_node = update_right(rbt_node, flip_rbt_node_color(get_right(rbt_node)))
-    return rbt_node
+def flip_colors(node):
+    node = flip_node_color(node)
+    node = update_left(node, flip_node_color(get_left(node)))
+    node = update_right(node, flip_node_color(get_right(node)))
+    return node
 
 
-def is_red(rbt_node):
-    return get_color(rbt_node) == RED if rbt_node else False
+def is_red(node):
+    return get_color(node) == RED if node else False
 
 
-def move_red_left(rbt_node):
-    rbt_node = flip_colors(rbt_node)
-    if is_red(get_right(get_left(rbt_node))):
-        rbt_node = update_right(rbt_node, rotate_right(get_right(rbt_node)))
-        rbt_node = rotate_left(rbt_node)
-        rbt_node = flip_colors(rbt_node)
-    return rbt_node
+def move_red_left(node):
+    node = flip_colors(node)
+    if is_red(get_right(get_left(node))):
+        node = update_right(node, rotate_right(get_right(node)))
+        node = rotate_left(node)
+        node = flip_colors(node)
+    return node
 
 
-def move_red_right(rbt_node):
-    rbt_node = flip_colors(rbt_node)
-    if is_red(get_left(get_left(rbt_node))):
-        rbt_node = rotate_right(rbt_node)
-        rbt_node = flip_colors(rbt_node)
-    return rbt_node
+def move_red_right(node):
+    node = flip_colors(node)
+    if is_red(get_left(get_left(node))):
+        node = rotate_right(node)
+        node = flip_colors(node)
+    return node
 
 
-def balance(rbt_node):
-    if not is_red(get_left(rbt_node)) and is_red(get_right(rbt_node)):
-        rbt_node = rotate_left(rbt_node)
-        rbt_node = balance(rbt_node)
-    elif is_red(get_left(rbt_node)) and is_red(get_left(get_left(rbt_node))):
-        rbt_node = rotate_right(rbt_node)
-        rbt_node = balance(rbt_node)
-    elif is_red(get_left(rbt_node)) and is_red(get_right(rbt_node)):
-        rbt_node = flip_colors(rbt_node)
-        rbt_node = balance(rbt_node)
-    return rbt_node
+def balance(node):
+    if not is_red(get_left(node)) and is_red(get_right(node)):
+        node = rotate_left(node)
+        node = balance(node)
+    elif is_red(get_left(node)) and is_red(get_left(get_left(node))):
+        node = rotate_right(node)
+        node = balance(node)
+    elif is_red(get_left(node)) and is_red(get_right(node)):
+        node = flip_colors(node)
+        node = balance(node)
+    return node
