@@ -23,19 +23,38 @@ def new_bst(*, compare=None):
     return bst
 
 
+def get_root(tree):
+    return tree['root']
+
+
+def update_root(tree, new_root):
+    tree['root'] = new_root
+    return tree
+
+
+def get_compare(tree):
+    return tree['compare']
+
+
 def put(bst, key, value):
-    bst['root'] = bst_node.insert_node(
-        bst['root'], key, value, bst['compare'])
+    root = get_root(bst)
+    compare = get_compare(bst)
+    new_root = bst_node.insert_node(root, key, value, compare)
+    bst = update_root(bst, new_root)
     return bst
 
 
 def get(bst, key):
-    return bst_node.get_node(bst['root'], key, bst['compare'])
+    root = get_root(bst)
+    compare = get_compare(bst)
+    return bst_node.get_node(root, key, compare)
 
 
 def remove(bst, key):
-    bst['root'] = bst_node.remove_node(
-        bst['root'], key, bst['compare'])
+    root = get_root(bst)
+    compare = get_compare(bst)
+    new_root = bst_node.remove_node(root, key, compare)
+    bst = update_root(bst, new_root)
     return bst
 
 
@@ -44,66 +63,88 @@ def contains(bst, key):
 
 
 def size(bst):
-    return bst_node.size_tree(bst['root'])
+    return bst_node.size_tree(get_root(bst))
 
 
 def is_empty(bst):
-    return bst_node.size_tree(bst['root']) == 0
+    return bst_node.size_tree(get_root(bst)) == 0
 
 
 def key_set(bst, *, list_type=SINGLE_LINKED):
+    root = get_root(bst)
+    compare = get_compare(bst)
     key_list = al.new_list() if list_type == ARRAY else lt.new_list()
-    return bst_node.key_set_tree(bst['root'], key_list, bst['compare'], list_type=list_type)
+    return bst_node.key_set_tree(root, key_list, compare, list_type=list_type)
 
 
 def value_set(bst, *, list_type=SINGLE_LINKED):
+    root = get_root(bst)
+    compare = get_compare(bst)
     value_list = al.new_list() if list_type == ARRAY else lt.new_list()
-    return bst_node.value_set_tree(bst['root'], value_list, bst['compare'], list_type=list_type)
+    return bst_node.value_set_tree(root, value_list, compare, list_type=list_type)
 
 
 def get_min(bst):
-    return bst_node.get_min_node(bst['root'])
+    root = get_root(bst)
+    return bst_node.get_min_node(root)
 
 
 def get_max(bst):
-    return bst_node.get_max_node(bst['root'])
+    root = get_root(bst)
+    return bst_node.get_max_node(root)
 
 
 def delete_min(bst):
-    bst['root'] = bst_node.delete_min_tree(bst['root'])
+    root = get_root(bst)
+    new_root = bst_node.delete_min_tree(root)
+    bst = update_root(bst, new_root)
     return bst
 
 
 def delete_max(bst):
-    bst['root'] = bst_node.delete_max_tree(bst['root'])
+    root = get_root(bst)
+    new_root = bst_node.delete_max_tree(root)
+    bst = update_root(bst, new_root)
     return bst
 
 
 def floor(bst, key):
-    return bst_node.floor_key(bst['root'], key, bst['compare'])
+    root = get_root(bst)
+    compare = get_compare(bst)
+    return bst_node.floor_key(root, key, compare)
 
 
 def ceiling(bst, key):
-    return bst_node.ceiling_key(bst['root'], key, bst['compare'])
+    root = get_root(bst)
+    compare = get_compare(bst)
+    return bst_node.ceiling_key(root, key, compare)
 
 
 def select(bst, pos):
-    return bst_node.select_key(bst['root'], pos)
+    root = get_root(bst)
+    return bst_node.select_key(root, pos)
 
 
 def rank(bst, key):
-    return bst_node.rank_key(bst['root'], key, bst['compare'])
+    root = get_root(bst)
+    compare = get_compare(bst)
+    return bst_node.rank_key(root, key, compare)
 
 
 def height(bst):
-    return bst_node.height_tree(bst['root'])
+    root = get_root(bst)
+    return bst_node.height_tree(root)
 
 
 def keys(bst, key_initial, key_final, *, list_type=SINGLE_LINKED):
+    root = get_root(bst)
+    compare = get_compare(bst)
     key_list = al.new_list() if list_type == ARRAY else lt.new_list()
-    return bst_node.keys_range(bst['root'], key_initial, key_final, key_list, bst['compare'], list_type=list_type)
+    return bst_node.keys_range(root, key_initial, key_final, key_list, compare, list_type=list_type)
 
 
 def values(bst, key_initial, key_final, *, list_type=SINGLE_LINKED):
+    root = get_root(bst)
+    compare = get_compare(bst)
     value_list = al.new_list() if list_type == ARRAY else lt.new_list()
-    return bst_node.values_range(bst['root'], key_initial, key_final, value_list, bst['compare'], list_type=list_type)
+    return bst_node.values_range(root, key_initial, key_final, value_list, compare, list_type=list_type)

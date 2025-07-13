@@ -19,23 +19,61 @@ def get_key(node):
     return key
 
 
+def get_left(node):
+    return node['left'] if node else None
+
+
+def get_right(node):
+    return node['right'] if node else None
+
+
+def update_left(node, new_left):
+    if node:
+        node['left'] = new_left
+    return node
+
+
+def update_right(node, new_right):
+    if node:
+        node['right'] = new_right
+    return node
+
+
+def update_key(node, new_key):
+    if node:
+        node['key'] = new_key
+    return node
+
+
+def update_value(node, new_value):
+    if node:
+        node['value'] = new_value
+    return node
+
+
+def update_size(node):
+    if node:
+        node['size'] = 1 + size_tree(get_left(node)) + \
+            size_tree(get_right(node))
+    return node
+
+
+def size_tree(root):
+    return root['size'] if root else 0
+
+
 def insert_node(root, key, value, compare):
     if not root:
         root = new_node(key, value)
     elif compare(key, get_key(root)) == 0:
-        root['value'] = value
+        root = update_value(root, value)
     elif compare(key, get_key(root)) < 0:
-        old_size = size_tree(root['left'])
-        root['left'] = insert_node(
-            root['left'], key, value, compare)
-        new_size = size_tree(root['left'])
-        root['size'] += new_size - old_size
-    else:
-        old_size = size_tree(root['right'])
-        root['right'] = insert_node(
-            root['right'], key, value, compare)
-        new_size = size_tree(root['right'])
-        root['size'] += new_size - old_size
+        new_left = insert_node(get_left(root), key, value, compare)
+        root = update_left(root, new_left)
+    elif compare(key, get_key(root)) > 0:
+        new_right = insert_node(get_right(root), key, value, compare)
+        root = update_right(root, new_right)
+    root = update_size(root)
     return root
 
 
@@ -45,46 +83,37 @@ def get_node(root, key, compare):
     elif compare(key, get_key(root)) == 0:
         value = get_value(root)
     elif compare(key, get_key(root)) < 0:
-        value = get_node(root['left'], key, compare)
-    else:
-        value = get_node(root['right'], key, compare)
+        value = get_node(get_left(root), key, compare)
+    elif compare(key, get_key(root)) > 0:
+        value = get_node(get_right(root), key, compare)
     return value
 
 
 def remove_node(root, key, compare):
     if root:
         if compare(key, get_key(root)) < 0:
-            old_size = size_tree(root['left'])
-            root['left'] = remove_node(
-                root['left'], key, compare)
-            new_size = size_tree(root['left'])
-            root['size'] -= old_size - new_size
+            new_left = remove_node(get_left(root), key, compare)
+            root = update_left(root, new_left)
         elif compare(key, get_key(root)) > 0:
-            old_size = size_tree(root['right'])
-            root['right'] = remove_node(
-                root['right'], key, compare)
-            new_size = size_tree(root['right'])
-            root['size'] -= old_size - new_size
-        else:
-            if not root['left'] and not root['right']:
+            new_right = remove_node(get_right(root), key, compare)
+            root = update_right(root, new_right)
+        elif compare(key, get_key(root)) == 0:
+            if not get_left(root) and not get_right(root):
                 root = None
-            elif not root['left']:
-                root = root['right']
-            elif not root['right']:
-                root = root['left']
-            elif root['left'] and root['right']:
-                successor_key = get_min_node(root['right'])
+            elif not get_left(root):
+                root = get_right(root)
+            elif not get_right(root):
+                root = get_left(root)
+            elif get_left(root) and get_right(root):
+                successor_key = get_min_node(get_right(root))
                 successor_value = get_node(
-                    root['right'], successor_key, compare)
-                root['right'] = delete_min_tree(root['right'])
-                root['key'] = successor_key
-                root['value'] = successor_value
-                root['size'] -= 1
+                    get_right(root), successor_key, compare)
+                new_right = delete_min_tree(get_right(root))
+                root = update_right(root, new_right)
+                root = update_key(root, successor_key)
+                root = update_value(root, successor_value)
+    root = update_size(root)
     return root
-
-
-def size_tree(root):
-    return root['size'] if root else 0
 
 
 def key_set_tree(root, key_list, compare, *, list_type=SINGLE_LINKED):
@@ -98,40 +127,42 @@ def value_set_tree(root, value_list, compare, *, list_type=SINGLE_LINKED):
 def get_min_node(root):
     if not root:
         key = None
-    elif not root['left']:
+    elif not get_left(root):
         key = get_key(root)
-    elif root['left']:
-        key = get_min_node(root['left'])
+    elif get_left(root):
+        key = get_min_node(get_left(root))
     return key
 
 
 def get_max_node(root):
     if not root:
         key = None
-    elif not root['right']:
+    elif not get_right(root):
         key = get_key(root)
-    elif root['right']:
-        key = get_max_node(root['right'])
+    elif get_right(root):
+        key = get_max_node(get_right(root))
     return key
 
 
 def delete_min_tree(root):
     if root:
-        if not root['left']:
-            root = root['right']
-        else:
-            root['left'] = delete_min_tree(root['left'])
-            root['size'] -= 1
+        if not get_left(root):
+            root = get_right(root)
+        if get_left(root):
+            new_left = delete_min_tree(get_left(root))
+            root = update_left(root, new_left)
+    root = update_size(root)
     return root
 
 
 def delete_max_tree(root):
     if root:
-        if not root['right']:
-            root = root['left']
-        elif root['right']:
-            root['right'] = delete_max_tree(root['right'])
-            root['size'] -= 1
+        if not get_right(root):
+            root = get_left(root)
+        elif get_right(root):
+            new_right = delete_max_tree(get_right(root))
+            root = update_right(root, new_right)
+    root = update_size(root)
     return root
 
 
@@ -141,10 +172,9 @@ def floor_key(root, key, compare):
     elif compare(key, get_key(root)) == 0:
         floor = get_key(root)
     elif compare(key, get_key(root)) < 0:
-        floor = floor_key(root['left'], key, compare)
-    else:
-        right_floor = floor_key(
-            root['right'], key, compare)
+        floor = floor_key(get_left(root), key, compare)
+    elif compare(key, get_key(root)) > 0:
+        right_floor = floor_key(get_right(root), key, compare)
         floor = right_floor if right_floor else get_key(root)
     return floor
 
@@ -152,15 +182,13 @@ def floor_key(root, key, compare):
 def ceiling_key(root, key, compare):
     if not root:
         ceiling = None
-    else:
+    if root:
         if compare(key, get_key(root)) == 0:
             ceiling = get_key(root)
         elif compare(key, get_key(root)) > 0:
-            ceiling = ceiling_key(
-                root['right'], key, compare)
-        else:
-            left_ceiling = ceiling_key(
-                root['left'], key, compare)
+            ceiling = ceiling_key(get_right(root), key, compare)
+        elif compare(key, get_key(root)) < 0:
+            left_ceiling = ceiling_key(get_left(root), key, compare)
             ceiling = left_ceiling if left_ceiling else get_key(root)
     return ceiling
 
@@ -168,16 +196,15 @@ def ceiling_key(root, key, compare):
 def rank_key(root, key, compare):
     if not root:
         rank = 0
-    else:
+    elif root:
         if compare(key, get_key(root)) < 0:
-            rank = rank_key(root['left'], key, compare)
+            rank = rank_key(get_left(root), key, compare)
         elif compare(key, get_key(root)) > 0:
-            rank_left = size_tree(root['left'])
-            rank_right = rank_key(
-                root['right'], key, compare)
+            rank_left = size_tree(get_left(root))
+            rank_right = rank_key(get_right(root), key, compare)
             rank = rank_left + 1 + rank_right
-        else:
-            rank = size_tree(root['left'])
+        elif compare(key, get_key(root)) == 0:
+            rank = size_tree(get_left(root))
     return rank
 
 
@@ -185,13 +212,13 @@ def select_key(root, pos):
     if not root:
         key = None
     elif root:
-        left_size = size_tree(root['left'])
+        left_size = size_tree(get_left(root))
         if pos == left_size:
             key = get_key(root)
         elif pos < left_size:
-            key = select_key(root['left'], pos)
+            key = select_key(get_left(root), pos)
         elif pos > left_size:
-            key = select_key(root['right'], pos - left_size - 1)
+            key = select_key(get_right(root), pos - left_size - 1)
     return key
 
 
@@ -199,8 +226,8 @@ def height_tree(root):
     if not root:
         return -1
     elif root:
-        left_height = height_tree(root['left'])
-        right_height = height_tree(root['right'])
+        left_height = height_tree(get_left(root))
+        right_height = height_tree(get_right(root))
         return 1 + max(left_height, right_height)
 
 
