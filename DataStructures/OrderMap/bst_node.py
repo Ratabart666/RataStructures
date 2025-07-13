@@ -4,98 +4,100 @@ ARRAY = 'array'
 SINGLE_LINKED = 'single_linked'
 
 
-def new_node(key, value):
-    node = {'key': key, 'value': value, 'size': 1, 'left': None, 'right': None}
-    return node
+def new_bst_node(key, value):
+    bst_node = {'key': key, 'value': value,
+                'size': 1, 'left': None, 'right': None}
+    return bst_node
 
 
-def get_value(node):
-    value = node['value'] if node else None
+def get_value(bst_node):
+    value = bst_node['value'] if bst_node else None
     return value
 
 
-def get_key(node):
-    key = node['key'] if node else None
+def get_key(bst_node):
+    key = bst_node['key'] if bst_node else None
     return key
 
 
-def get_left(node):
-    return node['left'] if node else None
+def get_left(bst_node):
+    return bst_node['left'] if bst_node else None
 
 
-def get_right(node):
-    return node['right'] if node else None
+def get_right(bst_node):
+    return bst_node['right'] if bst_node else None
 
 
-def update_left(node, new_left):
-    if node:
-        node['left'] = new_left
-    return node
+def update_left(bst_node, new_left):
+    if bst_node:
+        bst_node['left'] = new_left
+        bst_node = update_size(bst_node)
+    return bst_node
 
 
-def update_right(node, new_right):
-    if node:
-        node['right'] = new_right
-    return node
+def update_right(bst_node, new_right):
+    if bst_node:
+        bst_node['right'] = new_right
+        bst_node = update_size(bst_node)
+    return bst_node
 
 
-def update_key(node, new_key):
-    if node:
-        node['key'] = new_key
-    return node
+def update_key(bst_node, new_key):
+    if bst_node:
+        bst_node['key'] = new_key
+    return bst_node
 
 
-def update_value(node, new_value):
-    if node:
-        node['value'] = new_value
-    return node
+def update_value(bst_node, new_value):
+    if bst_node:
+        bst_node['value'] = new_value
+    return bst_node
 
 
-def update_size(node):
-    if node:
-        node['size'] = 1 + size_tree(get_left(node)) + \
-            size_tree(get_right(node))
-    return node
+def update_size(bst_node):
+    if bst_node:
+        bst_node['size'] = 1 + size_tree(get_left(bst_node)) + \
+            size_tree(get_right(bst_node))
+    return bst_node
 
 
 def size_tree(root):
     return root['size'] if root else 0
 
 
-def insert_node(root, key, value, compare):
+def insert_bst_node(root, key, value, compare):
     if not root:
-        root = new_node(key, value)
+        root = new_bst_node(key, value)
     elif compare(key, get_key(root)) == 0:
         root = update_value(root, value)
     elif compare(key, get_key(root)) < 0:
-        new_left = insert_node(get_left(root), key, value, compare)
+        new_left = insert_bst_node(get_left(root), key, value, compare)
         root = update_left(root, new_left)
     elif compare(key, get_key(root)) > 0:
-        new_right = insert_node(get_right(root), key, value, compare)
+        new_right = insert_bst_node(get_right(root), key, value, compare)
         root = update_right(root, new_right)
-    root = update_size(root)
     return root
 
 
-def get_node(root, key, compare):
+def get_bst_node(root, key, compare):
     if not root:
         value = None
     elif compare(key, get_key(root)) == 0:
         value = get_value(root)
     elif compare(key, get_key(root)) < 0:
-        value = get_node(get_left(root), key, compare)
+        value = get_bst_node(get_left(root), key, compare)
     elif compare(key, get_key(root)) > 0:
-        value = get_node(get_right(root), key, compare)
+        value = get_bst_node(get_right(root), key, compare)
     return value
 
 
-def remove_node(root, key, compare):
+def remove_bst_node(root, key, compare):
     if root:
         if compare(key, get_key(root)) < 0:
-            new_left = remove_node(get_left(root), key, compare)
+            new_left = remove_bst_node(get_left(root), key, compare)
             root = update_left(root, new_left)
         elif compare(key, get_key(root)) > 0:
-            new_right = remove_node(get_right(root), key, compare)
+            new_right = remove_bst_node(get_right(root), key, compare)
             root = update_right(root, new_right)
         elif compare(key, get_key(root)) == 0:
             if not get_left(root) and not get_right(root):
@@ -105,14 +107,13 @@ def remove_node(root, key, compare):
             elif not get_right(root):
                 root = get_left(root)
             elif get_left(root) and get_right(root):
-                successor_key = get_min_node(get_right(root))
-                successor_value = get_node(
+                successor_key = get_min_bst_node(get_right(root))
+                successor_value = get_bst_node(
                     get_right(root), successor_key, compare)
                 new_right = delete_min_tree(get_right(root))
                 root = update_right(root, new_right)
                 root = update_key(root, successor_key)
                 root = update_value(root, successor_value)
-    root = update_size(root)
     return root
 
 
@@ -124,23 +125,23 @@ def value_set_tree(root, value_list, compare, *, list_type=SINGLE_LINKED):
     return tt.inorder_tree(root, value_list, compare, values=True, list_type=list_type)
 
 
-def get_min_node(root):
+def get_min_bst_node(root):
     if not root:
         key = None
     elif not get_left(root):
         key = get_key(root)
     elif get_left(root):
-        key = get_min_node(get_left(root))
+        key = get_min_bst_node(get_left(root))
     return key
 
 
-def get_max_node(root):
+def get_max_bst_node(root):
     if not root:
         key = None
     elif not get_right(root):
         key = get_key(root)
     elif get_right(root):
-        key = get_max_node(get_right(root))
+        key = get_max_bst_node(get_right(root))
     return key
 
 
@@ -151,7 +152,6 @@ def delete_min_tree(root):
         if get_left(root):
             new_left = delete_min_tree(get_left(root))
             root = update_left(root, new_left)
-    root = update_size(root)
     return root
 
 
@@ -162,7 +162,6 @@ def delete_max_tree(root):
         elif get_right(root):
             new_right = delete_max_tree(get_right(root))
             root = update_right(root, new_right)
-    root = update_size(root)
     return root
 
 
