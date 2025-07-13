@@ -18,6 +18,7 @@ def print_test_options():
     print("     7.A Mapas con manejo linear probing")
     print("     7.B Mapas con manejo Separate Chaining")
     print("8. Árboles binarios de búsqueda")
+    print("9. Árboles rojo negro")
     print("0. Salir")
 
 
@@ -69,6 +70,10 @@ def execute_map_tests(input_option="7"):
 def execute_bst_tests():
     """Ejecuta las pruebas de BST"""
     execute_pytest_test("test_binary_search_tree")
+    
+def execute_rbt_tests():
+    """Ejecuta las pruebas de BST"""
+    execute_pytest_test("test_red_black_tree")
 
 
 if __name__ == "__main__":
@@ -103,6 +108,10 @@ if __name__ == "__main__":
     
     if input_option.startswith("8"):
         execute_bst_tests()
+        runned = True
+        
+    if input_option.startswith("9"):
+        execute_rbt_tests()
         runned = True
 
     if input_option == "0":
