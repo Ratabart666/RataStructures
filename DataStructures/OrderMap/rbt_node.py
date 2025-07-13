@@ -171,7 +171,7 @@ def delete_min_tree(root):
     if root:
         if not get_left(root):
             root = get_right(root)
-        else:
+        elif get_left(root):
             if not is_red(get_left(root)) and not is_red(get_left(get_left(root))):
                 root = move_red_left(root)
             new_left = delete_min_tree(get_left(root))
@@ -184,7 +184,7 @@ def delete_max_tree(root):
     if root:
         if not get_right(root):
             root = get_left(root)
-        else:
+        elif get_right(root):
             if is_red(get_left(root)):
                 root = rotate_right(root)
             if not is_red(get_right(root)) and not is_red(get_left(get_right(root))):

@@ -11,7 +11,7 @@ def default_compare(a, b):
         return -1
     elif a == b:
         return 0
-    else:
+    elif b > a:
         return 1
 
 
