@@ -2,8 +2,8 @@ import DataStructures.List.single_linked_list as lt
 from DataStructures.List import array_list as al
 import DataStructures.OrderMap.bst_node as bst
 
-ARRAY = 'array'
-SINGLE_LINKED = 'single_linked'
+ARRAY = 0
+SINGLE_LINKED = 1
 
 
 def inorder_tree(root, node_list, compare, *, values=False, key_initial=None, key_final=None, list_type=SINGLE_LINKED):

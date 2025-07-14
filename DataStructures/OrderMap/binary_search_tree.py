@@ -2,8 +2,8 @@ from DataStructures.List import single_linked_list as lt
 from DataStructures.List import array_list as al
 from DataStructures.OrderMap import bst_node
 
-ARRAY = 'array'
-SINGLE_LINKED = 'single_linked'
+ARRAY = 0
+SINGLE_LINKED = 1
 
 
 def default_compare(a, b):

@@ -1,7 +1,7 @@
 from DataStructures.OrderMap import tree_traversal as tt
 
-ARRAY = 'array'
-SINGLE_LINKED = 'single_linked'
+ARRAY = 0
+SINGLE_LINKED = 1
 
 
 def new_node(key, value):
