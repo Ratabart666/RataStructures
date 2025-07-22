@@ -1,6 +1,6 @@
 from DataStructures.List import single_linked_list as lt
 from DataStructures.List import array_list as al
-from DataStructures.OrderedMap import rbt_node
+from DataStructures.Tree import rbt_node
 
 ARRAY = 'array'
 SINGLE_LINKED = 'single_linked'

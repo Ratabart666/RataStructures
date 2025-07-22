@@ -1,5 +1,5 @@
-from DataStructures.OrderedMap import binary_search_tree as bst
-from DataStructures.OrderedMap import bst_node as bst_node
+from DataStructures.Tree import binary_search_tree as bst
+from DataStructures.Tree import bst_node as bst_node
 from DataStructures.Utils.utils import handle_not_implemented
 
 
