@@ -1,5 +1,5 @@
-from DataStructures.OrderMap import red_black_tree as rbt
-from DataStructures.OrderMap import rbt_node as rbt_node
+from DataStructures.OrderedMap import red_black_tree as rbt
+from DataStructures.OrderedMap import rbt_node as rbt_node
 from DataStructures.Utils.utils import handle_not_implemented
 
 
