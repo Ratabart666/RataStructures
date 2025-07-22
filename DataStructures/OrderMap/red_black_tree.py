@@ -11,11 +11,11 @@ def default_compare(a, b):
         return -1
     elif a == b:
         return 0
-    elif b > a:
+    elif a > b:
         return 1
 
 
-def new_rbt(*, compare=None):
+def new_map(*, compare=None):
     rbt = {
         'root': None,
         'compare': compare or default_compare

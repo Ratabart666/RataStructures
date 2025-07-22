@@ -4,13 +4,13 @@ from DataStructures.Utils.utils import handle_not_implemented
 
 
 def setup_tests():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     return empty_tree
 
 
 def setup_three_nodes():
-    three_nodes = rbt.new_rbt()
+    three_nodes = rbt.new_map()
     node_1 = rbt_node.new_node(1, 1)
     node_3 = rbt_node.new_node(10, 10)
     node_2 = rbt_node.new_node(5, 5)
@@ -28,14 +28,14 @@ def setup_three_nodes():
 
 @handle_not_implemented
 def test_new_red_black_tree():
-    empty_rbt = rbt.new_rbt()
+    empty_rbt = rbt.new_map()
 
     assert empty_rbt["root"] is None
 
 
 @handle_not_implemented
 def test_put():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     result = rbt.put(empty_tree, 5, "test")
 
@@ -45,7 +45,7 @@ def test_put():
 
 @handle_not_implemented
 def test_get():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     result = rbt.get(empty_tree, 5)
 
@@ -54,7 +54,7 @@ def test_get():
 
 @handle_not_implemented
 def test_remove():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     result = rbt.remove(empty_tree, 5)
 
@@ -64,7 +64,7 @@ def test_remove():
 
 @handle_not_implemented
 def test_contains():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     result = rbt.contains(empty_tree, 10)
 
@@ -73,7 +73,7 @@ def test_contains():
 
 @handle_not_implemented
 def test_size():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     result = rbt.size(empty_tree)
 
@@ -92,7 +92,7 @@ def test_is_empty():
 
 @handle_not_implemented
 def test_key_set():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     result = rbt.key_set(empty_tree)
 
@@ -107,7 +107,7 @@ def test_key_set():
 
 @handle_not_implemented
 def test_value_set():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
 
     result = rbt.value_set(empty_tree)
 
@@ -122,11 +122,11 @@ def test_value_set():
 
 @handle_not_implemented
 def test_get_min():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
     assert rbt.get_min(empty_tree) is None
 
     # Insertar nodos
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 30, "A")
     rbt.put(tree, 10, "B")
     rbt.put(tree, 20, "C")
@@ -138,10 +138,10 @@ def test_get_min():
 
 @handle_not_implemented
 def test_get_max():
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
     assert rbt.get_max(empty_tree) is None
 
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 15, "A")
     rbt.put(tree, 10, "B")
     rbt.put(tree, 5, "C")
@@ -152,7 +152,7 @@ def test_get_max():
 
 @handle_not_implemented
 def test_delete_min():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
 
     rbt.put(tree, 50, "a")
     rbt.put(tree, 30, "b")
@@ -170,11 +170,11 @@ def test_delete_min():
 @handle_not_implemented
 def test_delete_max():
 
-    empty_tree = rbt.new_rbt()
+    empty_tree = rbt.new_map()
     rbt.delete_max(empty_tree)
     assert empty_tree["root"] is None
 
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 30, "A")
     rbt.put(tree, 10, "B")
     rbt.put(tree, 40, "C")
@@ -189,7 +189,7 @@ def test_delete_max():
 
 @handle_not_implemented
 def test_floor():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
 
     rbt.put(tree, 10, "a")
     rbt.put(tree, 20, "b")
@@ -209,7 +209,7 @@ def test_floor():
 
 @handle_not_implemented
 def test_ceiling():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
 
     rbt.put(tree, 10, "a")
     rbt.put(tree, 20, "b")
@@ -230,7 +230,7 @@ def test_ceiling():
 
 @handle_not_implemented
 def test_select():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 10, "a")
     key = rbt.select(tree, 0)
     assert key is None or isinstance(key, (int, float, str))
@@ -238,7 +238,7 @@ def test_select():
 
 @handle_not_implemented
 def test_rank():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 10, "a")
     r = rbt.rank(tree, 10)
     assert isinstance(r, int)
@@ -246,7 +246,7 @@ def test_rank():
 
 @handle_not_implemented
 def test_heigh():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 10, "a")
     h = rbt.height(tree)
     assert isinstance(h, int)
@@ -254,7 +254,7 @@ def test_heigh():
 
 @handle_not_implemented
 def test_keys():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 10, "a")
     rbt.put(tree, 20, "b")
     keys = rbt.keys(tree, 5, 25)
@@ -263,7 +263,7 @@ def test_keys():
 
 @handle_not_implemented
 def test_values():
-    tree = rbt.new_rbt()
+    tree = rbt.new_map()
     rbt.put(tree, 10, "a")
     rbt.put(tree, 20, "b")
     values = rbt.values(tree, 5, 25)
